@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="eSpawtsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Slug" Type="nvarchar" MaxLength="48" />
+        </EntityType>
+        <EntityType Name="Tournament">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Retired" Type="bit" Nullable="false" />
+          <Property Name="TypeID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GameID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Slug" Type="nvarchar" MaxLength="512" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TournamentFormat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TournamentType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="FormatID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GameID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TournamentUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TournamentID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="None" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="NickName" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="PasswordSalt" Type="varbinary" MaxLength="50" />
+          <Property Name="PasswordHash" Type="varbinary(max)" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="512" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Tournament_Game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Tournament" Type="Self.Tournament" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tournament">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tournament_TournamentType">
+          <End Role="TournamentType" Type="Self.TournamentType" Multiplicity="1" />
+          <End Role="Tournament" Type="Self.Tournament" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TournamentType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tournament">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tournament_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Tournament" Type="Self.Tournament" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tournament">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TournamentType_Game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="TournamentType" Type="Self.TournamentType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TournamentType">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TournamentType_TournamentFormat">
+          <End Role="TournamentFormat" Type="Self.TournamentFormat" Multiplicity="1" />
+          <End Role="TournamentType" Type="Self.TournamentType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TournamentFormat">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TournamentType">
+              <PropertyRef Name="FormatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TournamentUser_Tournament">
+          <End Role="Tournament" Type="Self.Tournament" Multiplicity="1" />
+          <End Role="TournamentUser" Type="Self.TournamentUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tournament">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TournamentUser">
+              <PropertyRef Name="TournamentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TournamentUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="TournamentUser" Type="Self.TournamentUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TournamentUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="eSpawtsModelStoreContainer">
+          <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tournament" EntityType="Self.Tournament" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TournamentFormat" EntityType="Self.TournamentFormat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TournamentType" EntityType="Self.TournamentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TournamentUser" EntityType="Self.TournamentUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Tournament_Game" Association="Self.FK_Tournament_Game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Tournament" EntitySet="Tournament" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tournament_TournamentType" Association="Self.FK_Tournament_TournamentType">
+            <End Role="TournamentType" EntitySet="TournamentType" />
+            <End Role="Tournament" EntitySet="Tournament" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tournament_User" Association="Self.FK_Tournament_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Tournament" EntitySet="Tournament" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TournamentType_Game" Association="Self.FK_TournamentType_Game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="TournamentType" EntitySet="TournamentType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TournamentType_TournamentFormat" Association="Self.FK_TournamentType_TournamentFormat">
+            <End Role="TournamentFormat" EntitySet="TournamentFormat" />
+            <End Role="TournamentType" EntitySet="TournamentType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TournamentUser_Tournament" Association="Self.FK_TournamentUser_Tournament">
+            <End Role="Tournament" EntitySet="Tournament" />
+            <End Role="TournamentUser" EntitySet="TournamentUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TournamentUser_User" Association="Self.FK_TournamentUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="TournamentUser" EntitySet="TournamentUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="eSpawtsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="eSpawtsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tournaments" EntityType="eSpawtsModel.Tournament" />
+          <EntitySet Name="Games" EntityType="eSpawtsModel.Game" />
+          <AssociationSet Name="FK_Tournament_Game" Association="eSpawtsModel.FK_Tournament_Game">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="Tournament" EntitySet="Tournaments" />
+          </AssociationSet>
+          <EntitySet Name="TournamentUsers" EntityType="eSpawtsModel.TournamentUser" />
+          <AssociationSet Name="FK_TournamentUser_Tournament" Association="eSpawtsModel.FK_TournamentUser_Tournament">
+            <End Role="Tournament" EntitySet="Tournaments" />
+            <End Role="TournamentUser" EntitySet="TournamentUsers" />
+          </AssociationSet>
+          <EntitySet Name="TournamentFormats" EntityType="eSpawtsModel.TournamentFormat" />
+          <EntitySet Name="TournamentTypes" EntityType="eSpawtsModel.TournamentType" />
+          <AssociationSet Name="FK_TournamentType_Game" Association="eSpawtsModel.FK_TournamentType_Game">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="TournamentType" EntitySet="TournamentTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tournament_TournamentType" Association="eSpawtsModel.FK_Tournament_TournamentType">
+            <End Role="TournamentType" EntitySet="TournamentTypes" />
+            <End Role="Tournament" EntitySet="Tournaments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TournamentType_TournamentFormat" Association="eSpawtsModel.FK_TournamentType_TournamentFormat">
+            <End Role="TournamentFormat" EntitySet="TournamentFormats" />
+            <End Role="TournamentType" EntitySet="TournamentTypes" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="eSpawtsModel.User" />
+          <AssociationSet Name="FK_Tournament_User" Association="eSpawtsModel.FK_Tournament_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Tournament" EntitySet="Tournaments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TournamentUser_User" Association="eSpawtsModel.FK_TournamentUser_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="TournamentUser" EntitySet="TournamentUsers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Tournament">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="Retired" Type="Boolean" Nullable="false" />
+          <Property Name="TypeID" Type="Guid" Nullable="false" />
+          <Property Name="GameID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="eSpawtsModel.FK_Tournament_Game" FromRole="Tournament" ToRole="Game" />
+          <NavigationProperty Name="TournamentUsers" Relationship="eSpawtsModel.FK_TournamentUser_Tournament" FromRole="Tournament" ToRole="TournamentUser" />
+          <Property Name="Slug" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TournamentType" Relationship="eSpawtsModel.FK_Tournament_TournamentType" FromRole="Tournament" ToRole="TournamentType" />
+          <NavigationProperty Name="User" Relationship="eSpawtsModel.FK_Tournament_User" FromRole="Tournament" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tournaments" Relationship="eSpawtsModel.FK_Tournament_Game" FromRole="Game" ToRole="Tournament" />
+          <Property Name="Slug" Type="String" MaxLength="48" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TournamentTypes" Relationship="eSpawtsModel.FK_TournamentType_Game" FromRole="Game" ToRole="TournamentType" />
+        </EntityType>
+        <Association Name="FK_Tournament_Game">
+          <End Type="eSpawtsModel.Game" Role="Game" Multiplicity="1" />
+          <End Type="eSpawtsModel.Tournament" Role="Tournament" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tournament">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TournamentUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="TournamentID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Tournament" Relationship="eSpawtsModel.FK_TournamentUser_Tournament" FromRole="TournamentUser" ToRole="Tournament" />
+          <NavigationProperty Name="User" Relationship="eSpawtsModel.FK_TournamentUser_User" FromRole="TournamentUser" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_TournamentUser_Tournament">
+          <End Type="eSpawtsModel.Tournament" Role="Tournament" Multiplicity="1" />
+          <End Type="eSpawtsModel.TournamentUser" Role="TournamentUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tournament">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TournamentUser">
+              <PropertyRef Name="TournamentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TournamentFormat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TournamentTypes" Relationship="eSpawtsModel.FK_TournamentType_TournamentFormat" FromRole="TournamentFormat" ToRole="TournamentType" />
+        </EntityType>
+        <EntityType Name="TournamentType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="FormatID" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GameID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="eSpawtsModel.FK_TournamentType_Game" FromRole="TournamentType" ToRole="Game" />
+          <NavigationProperty Name="Tournaments" Relationship="eSpawtsModel.FK_Tournament_TournamentType" FromRole="TournamentType" ToRole="Tournament" />
+          <NavigationProperty Name="TournamentFormat" Relationship="eSpawtsModel.FK_TournamentType_TournamentFormat" FromRole="TournamentType" ToRole="TournamentFormat" />
+        </EntityType>
+        <Association Name="FK_TournamentType_Game">
+          <End Type="eSpawtsModel.Game" Role="Game" Multiplicity="1" />
+          <End Type="eSpawtsModel.TournamentType" Role="TournamentType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TournamentType">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tournament_TournamentType">
+          <End Type="eSpawtsModel.TournamentType" Role="TournamentType" Multiplicity="1" />
+          <End Type="eSpawtsModel.Tournament" Role="Tournament" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TournamentType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tournament">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TournamentType_TournamentFormat">
+          <End Type="eSpawtsModel.TournamentFormat" Role="TournamentFormat" Multiplicity="1" />
+          <End Type="eSpawtsModel.TournamentType" Role="TournamentType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TournamentFormat">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TournamentType">
+              <PropertyRef Name="FormatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NickName" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordSalt" Type="Binary" MaxLength="50" FixedLength="false" />
+          <Property Name="PasswordHash" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tournaments" Relationship="eSpawtsModel.FK_Tournament_User" FromRole="User" ToRole="Tournament" />
+          <NavigationProperty Name="TournamentUsers" Relationship="eSpawtsModel.FK_TournamentUser_User" FromRole="User" ToRole="TournamentUser" />
+        </EntityType>
+        <Association Name="FK_Tournament_User">
+          <End Type="eSpawtsModel.User" Role="User" Multiplicity="1" />
+          <End Type="eSpawtsModel.Tournament" Role="Tournament" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tournament">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TournamentUser_User">
+          <End Type="eSpawtsModel.User" Role="User" Multiplicity="1" />
+          <End Type="eSpawtsModel.TournamentUser" Role="TournamentUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TournamentUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="eSpawtsModelStoreContainer" CdmEntityContainer="eSpawtsEntities">
+          <EntitySetMapping Name="Tournaments">
+            <EntityTypeMapping TypeName="eSpawtsModel.Tournament">
+              <MappingFragment StoreEntitySet="Tournament">
+                <ScalarProperty Name="Slug" ColumnName="Slug" />
+                <ScalarProperty Name="GameID" ColumnName="GameID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Retired" ColumnName="Retired" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Games">
+            <EntityTypeMapping TypeName="eSpawtsModel.Game">
+              <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="Slug" ColumnName="Slug" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TournamentUsers">
+            <EntityTypeMapping TypeName="eSpawtsModel.TournamentUser">
+              <MappingFragment StoreEntitySet="TournamentUser">
+                <ScalarProperty Name="TournamentID" ColumnName="TournamentID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TournamentFormats">
+            <EntityTypeMapping TypeName="eSpawtsModel.TournamentFormat">
+              <MappingFragment StoreEntitySet="TournamentFormat">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TournamentTypes">
+            <EntityTypeMapping TypeName="eSpawtsModel.TournamentType">
+              <MappingFragment StoreEntitySet="TournamentType">
+                <ScalarProperty Name="GameID" ColumnName="GameID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="FormatID" ColumnName="FormatID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="eSpawtsModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

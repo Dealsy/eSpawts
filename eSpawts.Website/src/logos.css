@@ -1,0 +1,6 @@
+.logos{
+    display: flex;
+    height: 100px;;
+    justify-content: center;
+    margin: 100px;
+}

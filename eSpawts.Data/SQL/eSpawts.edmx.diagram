@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="aba94bb69b5f4a21941c20b87c225397" Name="Diagram1" ZoomLevel="94">
+        <EntityTypeShape EntityType="eSpawtsModel.Tournament" Width="1.5" PointX="3.125" PointY="1.5" />
+        <EntityTypeShape EntityType="eSpawtsModel.Game" Width="1.5" PointX="0.625" PointY="4" />
+        <AssociationConnector Association="eSpawtsModel.FK_Tournament_Game" />
+        <EntityTypeShape EntityType="eSpawtsModel.TournamentUser" Width="1.875" PointX="5.375" PointY="2.5" />
+        <AssociationConnector Association="eSpawtsModel.FK_TournamentUser_Tournament" />
+        <EntityTypeShape EntityType="eSpawtsModel.TournamentFormat" Width="1.875" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="eSpawtsModel.TournamentType" Width="1.75" PointX="0.625" PointY="0.75" />
+        <AssociationConnector Association="eSpawtsModel.FK_TournamentType_Game" />
+        <AssociationConnector Association="eSpawtsModel.FK_Tournament_TournamentType" />
+        <AssociationConnector Association="eSpawtsModel.FK_TournamentType_TournamentFormat" />
+        <EntityTypeShape EntityType="eSpawtsModel.User" Width="1.875" PointX="5.375" PointY="4.75" />
+        <AssociationConnector Association="eSpawtsModel.FK_Tournament_User" />
+        <AssociationConnector Association="eSpawtsModel.FK_TournamentUser_User" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

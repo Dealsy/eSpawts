@@ -1,0 +1,74 @@
+
+$scifiGreen: #6D9E12;
+
+@media all and (min-width: 480px) {
+    .Login {
+      padding: 60px 0;
+    } 
+    .body{
+      margin: 0px;
+      height: 100%;
+    }
+    .Login{ 
+      background: url("../Images/starcraft_pylon.jpg")no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      width: 100%; 
+      height: 100vh;
+    }
+  
+    .Login form {
+      justify-content: center;
+      align-items: center;
+      width: 800px;
+      margin: auto;
+      background-color:  #0C0E12;
+      color: #fff;
+      padding: 50px;
+      border: .2rem solid #ececec;
+      border-color: $scifiGreen;
+      box-shadow: 5px 5px black;
+      border-radius: 8px;
+    }
+  }
+
+  .loginScrOpts {
+    margin-top: 45px;
+    background-color: #011327;
+    font-weight: 600;
+    color: $scifiGreen;
+    border: 2px solid;
+    border-color: $scifiGreen;
+    border-radius: 8px;
+}
+
+
+.loginScrOpts:hover {
+  margin-top: 45px;
+  ont-weight: 600;
+  background-color: $scifiGreen;
+  border-color: black;
+  color: #282c34;
+  border-radius: 8px;
+}
+
+.loginScrOpts a {
+  font-weight: 600;
+  background-color: #282c34;
+  border-color: #282c34;
+  color: #282c34;
+}
+
+.loginScrOpts a:hover {
+  font-weight: 600;
+  background-color: $scifiGreen;
+  border-color: #282c34;
+  color: black;
+}
+
+.form_Label{
+  font-size: 18px;
+  font-weight: bolder;
+}

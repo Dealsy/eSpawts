@@ -1,0 +1,12 @@
+.Banner_styles{
+    display: flex;
+    height: 00px;;
+    justify-content: center;
+    margin: 100px;
+}
+
+.Banner_images{
+    object-fit: cover;
+    width: 200px;
+    height: 400px;
+}
