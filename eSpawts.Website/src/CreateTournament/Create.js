@@ -24,7 +24,7 @@ function Create() {
   return (
     <Container>
       <Row>
-        <Col sm={4}>
+        <Col sm={6}>
           <From
             name={playerName}
             onSetPlayerName={(event) => setPlayerName(event.target.value)}
@@ -37,7 +37,7 @@ function Create() {
             handleSubmit={handleSubmit}
           />
         </Col>
-        <Col sm={4}>
+        <Col sm={3}>
           <Teams playerName={playerName} playerNameTeam2={playerNameTeam2} />
         </Col>
         <Col sm={3}>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-grid-system";
+import GlobalButton from "../reuseableComponenets/Buttons/GlobalButton";
 import TournName from "./Form/TournamentName";
 import Game from "./Form/Game";
 import Team1 from "./Form/Team1";
@@ -22,27 +23,29 @@ function Form({
     <Container className="pb-10">
       {tname === "" ? <h1>Tournament Name</h1> : <h1>{tname}</h1>}
 
-      <form onSubmit={handleSubmit} className=" p-5 border-4 w-auto">
-        <Row>
-          <TournName tname={tname} onSetTname={onSetTname} />
-          <Game />
-          <Team1 playerName={playerName} onSetPlayerName={onSetPlayerName} />
-          <Team2
-            playerNameTeam2={playerNameTeam2}
-            onSetPlayerNameTeam2={onSetPlayerNameTeam2}
-          />
-          <GameType />
-          <BestOf />
-          <Prize />
-          <FormMaps />
-        </Row>
-        <button
-          className=" transition ease-out duration-700 border-2 border-indigo-300 rounded-lg text-indigo-300 hover:bg-blue-700 transform hover:-translate-y-1 hover:scale-110 p-2 text-base ml-72 "
-          type="submit"
-        >
-          {" "}
-          Submit{" "}
-        </button>
+      <form onSubmit={handleSubmit} className=" w-full max-w-lg">
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <Row>
+              <TournName tname={tname} onSetTname={onSetTname} />
+              <Game />
+              <Team1
+                playerName={playerName}
+                onSetPlayerName={onSetPlayerName}
+              />
+              <Team2
+                playerNameTeam2={playerNameTeam2}
+                onSetPlayerNameTeam2={onSetPlayerNameTeam2}
+              />
+              <GameType />
+              <BestOf />
+              <Prize />
+              <FormMaps />
+            </Row>
+
+            <GlobalButton type="submit" label="submit" />
+          </div>
+        </div>
       </form>
     </Container>
   );
