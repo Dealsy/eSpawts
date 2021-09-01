@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-grid-system";
 
 function Teams({ playerName, playerNameTeam2 }) {
   return (
-    <Container>
+    <Container className="mt-5">
       <h1>Teams:</h1>
       <Row className="m-4">
         <Col>
@@ -11,8 +11,6 @@ function Teams({ playerName, playerNameTeam2 }) {
           <ul>
             <li>{playerName}</li>
           </ul>
-        </Col>
-        <Col>
           <h2>Team 2</h2>
           <ul>
             <li>{playerNameTeam2}</li>

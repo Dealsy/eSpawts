@@ -3,19 +3,18 @@ import React from "react";
 function TournName({ tname, onSetTname }) {
   return (
     <div>
-      <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <div>
         <label
-          className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          className="block uppercase tracking-wide text-gray-900 text-xs font-bold mb-2"
           htmlFor="tname"
         >
           Tournament Name
         </label>
         <input
-          className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+          className="appearance-none block w-96 bg-gray-200 text-gray-700 border border-red-500 rounded  px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
           id="tname"
           name="tname"
           type="text"
-          placeholder="Jane"
           value={tname}
           onChange={onSetTname}
         />
